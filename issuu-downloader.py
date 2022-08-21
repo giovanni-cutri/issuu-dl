@@ -11,7 +11,7 @@ soup = bs4.BeautifulSoup(res.text, "lxml")
 
 publication_name_raw = soup.select("meta[property='og:title']")[0].attrs["content"]
 publication_name = publication_name_raw.replace("/", " ").replace(":", "").replace("*", " ").replace("?", "")\
-    .replace("'", "").replace("<", "").replace(">", "").replace("|", "")
+    .replace("'", " ").replace("<", "").replace(">", "").replace("|", "").rstrip()
 
 publication_dir = os.path.join(current_dir, "publications", publication_name, "")
 os.makedirs(publication_dir)
@@ -24,3 +24,4 @@ for i in range(1, pages_number+1):
     urllib.request.urlretrieve(images_link + str(i) + ".jpg", publication_dir + str(i) + ".jpg")
 
 print("Done.")
+input()
