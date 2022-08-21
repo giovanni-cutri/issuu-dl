@@ -1,4 +1,9 @@
-import os, requests, bs4, lxml, re, urllib.request
+import os
+import requests
+import bs4
+import lxml
+import re
+import urllib.request
 
 current_dir = os.getcwd()
 
