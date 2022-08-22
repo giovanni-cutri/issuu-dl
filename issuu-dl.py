@@ -1,3 +1,4 @@
+import argparse
 import sys
 import os
 import requests
@@ -7,12 +8,12 @@ import re
 from PIL import Image
 import urllib.request
 
-current_dir = os.getcwd()
+parser = argparse.ArgumentParser()
+parser.add_argument("url", help="the URL of the video you want to download")
+parser.add_argument("-p", "--pdf", help="generate a PDF for the publication", action="store_true")
+args = parser.parse_args()
 
-if len(sys.argv) == 2:
-    link = sys.argv[1]
-elif len(sys.argv) == 3:
-    link = sys.argv[2]
+link = args.url
 
 res = requests.get(link)
 res.raise_for_status()
@@ -21,6 +22,7 @@ soup = bs4.BeautifulSoup(res.text, "lxml")
 publication_name_raw = soup.select("meta[property='og:title']")[0].attrs["content"]
 publication_name = re.sub('[^A-Za-z0-9]+', '', publication_name_raw)
 
+current_dir = os.getcwd()
 publication_dir = os.path.join(current_dir, "publications", publication_name, "")
 
 try:
@@ -36,7 +38,9 @@ for i in range(1, pages_number+1):
     print("Saving page " + str(i) + " of " + str(pages_number) + "...")
     urllib.request.urlretrieve(images_link + str(i) + ".jpg", publication_dir + str(i) + ".jpg")
 
-if len(sys.argv) == 3 and sys.argv[1] == '-pdf':
+if args.pdf:
+
+    print("Generating PDF...")
 
     images = [
         Image.open(publication_dir + f)
