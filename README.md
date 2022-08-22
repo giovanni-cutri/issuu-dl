@@ -27,6 +27,8 @@ pip install -r requirements.txt
 issuu-dl-win [OPTIONS] [--] URL [URL...] 
 ```
 
+By default, the publication is downloaded as a collection of *.jpg* files which gets saved inside a folder with the name of the publication.
+
 Currently, the only available options are:
 
 ```
