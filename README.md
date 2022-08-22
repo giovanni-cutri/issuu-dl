@@ -1,4 +1,4 @@
-# Issuu-Downloader
+# issuu-dl
  
 A simple tool to download publications from issuu.com, written in Python.
 
