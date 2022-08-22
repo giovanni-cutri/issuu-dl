@@ -20,7 +20,7 @@ res.raise_for_status()
 soup = bs4.BeautifulSoup(res.text, "lxml")
 
 publication_name_raw = soup.select("meta[property='og:title']")[0].attrs["content"]
-publication_name = re.sub('[^A-Za-z0-9]+', '', publication_name_raw)
+publication_name = re.sub('[^A-Za-z0-9 ]+', '', publication_name_raw)
 
 current_dir = os.getcwd()
 publication_dir = os.path.join(current_dir, "publications", publication_name, "")
