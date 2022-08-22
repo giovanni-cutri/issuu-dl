@@ -9,7 +9,7 @@ from PIL import Image
 import urllib.request
 
 parser = argparse.ArgumentParser()
-parser.add_argument("url", help="the URL of the video you want to download")
+parser.add_argument("url", help="the URL of the publication you want to download")
 parser.add_argument("-p", "--pdf", help="generate a PDF for the publication", action="store_true")
 args = parser.parse_args()
 
