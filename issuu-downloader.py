@@ -1,25 +1,33 @@
+import sys
 import os
 import requests
 import bs4
 import lxml
 import re
+from PIL import Image
 import urllib.request
 
 current_dir = os.getcwd()
 
-print("Paste the link of the publication you want to download:")
-link = input()
+if len(sys.argv) == 2:
+    link = sys.argv[1]
+elif len(sys.argv) == 3:
+    link = sys.argv[2]
 
 res = requests.get(link)
 res.raise_for_status()
 soup = bs4.BeautifulSoup(res.text, "lxml")
 
 publication_name_raw = soup.select("meta[property='og:title']")[0].attrs["content"]
-publication_name = publication_name_raw.replace("/", " ").replace(":", "").replace("*", " ").replace("?", "")\
-    .replace("'", " ").replace("<", "").replace(">", "").replace("|", "").rstrip()
+publication_name = re.sub('[^A-Za-z0-9]+', '', publication_name_raw)
 
 publication_dir = os.path.join(current_dir, "publications", publication_name, "")
-os.makedirs(publication_dir)
+
+try:
+    os.makedirs(publication_dir)
+except FileExistsError:
+    print("Publication has already been downloaded.")
+    sys.exit()
 
 images_link = soup.select("meta[property='og:image']")[0].attrs["content"][:-5]
 pages_number = int(re.findall(re.compile("pageCount.*?,&quot"), res.text)[0][:-6][16:])
@@ -28,5 +36,17 @@ for i in range(1, pages_number+1):
     print("Saving page " + str(i) + " of " + str(pages_number) + "...")
     urllib.request.urlretrieve(images_link + str(i) + ".jpg", publication_dir + str(i) + ".jpg")
 
+if len(sys.argv) == 3 and sys.argv[1] == '-pdf':
+
+    images = [
+        Image.open(publication_dir + f)
+        for f in os.listdir(publication_dir)
+    ]
+
+    pdf_path = publication_dir + publication_name + ".pdf"
+
+    images[0].save(
+        pdf_path, "PDF", resolution=100.0, save_all=True, append_images=images[1:]
+    )
+
 print("Done.")
-input()
