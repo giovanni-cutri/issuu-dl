@@ -8,7 +8,7 @@ A simple tool to download publications from issuu.com, written in Python.
 
 You can install issuu-dl by downloading the release binary (currently available only for Windows):
 
-[issuu-dl-win.exe](https://github.com/giovanni-cutri/issuu-downloader/releases/download/v0.1.0/issuu-dl-win.exe)
+[issuu-dl.exe](https://github.com/giovanni-cutri/issuu-downloader/releases/download/v0.1.0/issuu-dl-win.exe)
 
 
 ## Dependencies
@@ -24,7 +24,7 @@ pip install -r requirements.txt
 ## Usage
 
 ```
-issuu-dl-win [OPTIONS] [--] URL [URL...] 
+issuu-dl [OPTIONS] [--] URL [URL...] 
 ```
 
 By default, the publication is downloaded as a collection of *.jpg* files which gets saved inside a folder with the name of the publication.
