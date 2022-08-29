@@ -55,7 +55,7 @@ def create_directory(publication_dir):
 
 
 def download_images(soup, res, publication_dir):
-    images_link = soup.select("meta[property='og:image']")[0].attrs["content"][:-5]
+    images_link = soup.select("meta[property='og:image']")[0].attrs["content"][:-5]  # get boilerplate link for images
     pages_number = int(re.findall(re.compile("pageCount.*?,&quot"), res.text)[0][:-6][16:])
     for i in range(1, pages_number+1):
         print("Saving page " + str(i) + " of " + str(pages_number) + "...")
