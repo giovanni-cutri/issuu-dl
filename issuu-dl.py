@@ -7,13 +7,14 @@ import sys
 import urllib.request
 import zipfile
 from PIL import Image
+from os.path import basename
 
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("url", help="the URL of the publication you want to download")
     parser.add_argument("-p", "--pdf", help="generate a PDF for the publication", action="store_true")
-    parser.add_argument("-z", "--zip", help="generate a zipped file for the publication")
+    parser.add_argument("-z", "--zip", help="generate a zipped file for the publication", action="store_true")
     args = parser.parse_args()
     return args
 
@@ -85,9 +86,11 @@ def download_zip(args, publication_dir, publication_name):
     if args.zip:
         print("Generating zipped file...")
         list_of_files = os.listdir(publication_dir)
-        with zipfile.ZipFile(publication_name + '.zip', 'w') as zipped_file:
+        with zipfile.ZipFile(publication_dir + publication_name + '.zip', 'w') as zipped_file:
             for file in list_of_files:
-                zipped_file.write(file, compress_type=zipfile.ZIP_DEFLATED)
+                if file.endswith(".jpg"):
+                    zipped_file.write(publication_dir + file, basename(publication_dir + file),
+                                      compress_type=zipfile.ZIP_DEFLATED)
         print("Done.")
 
 
