@@ -2,7 +2,7 @@
 
 # issuu-dl
  
-A simple tool to download publications from issuu.com, written in Python.
+A simple tool to download publications from [issuu.com](https://issuu.com/), written in Python.
 
 ## Installation
 
