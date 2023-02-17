@@ -10,8 +10,13 @@ from PIL import Image
 from os.path import basename
 
 
+def main():
+    args = parse_arguments()
+    download(args)
+
+    
 def parse_arguments():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description="Download publications from issuu.com")
     parser.add_argument("url", help="the URL of the publication you want to download")
     parser.add_argument("-p", "--pdf", help="generate a PDF for the publication", action="store_true")
     parser.add_argument("-z", "--zip", help="generate a zipped file for the publication", action="store_true")
@@ -94,9 +99,5 @@ def download_zip(args, publication_dir, publication_name):
         print("Done.")
 
 
-def main():
-    args = parse_arguments()
-    download(args)
-
-
-main()
+if __name__ == "__main__":
+    main()
