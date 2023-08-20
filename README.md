@@ -1,5 +1,3 @@
-![Socialify](https://github.com/giovanni-cutri/issuu-dl/blob/main/resources/socialify-logo.png)
-
 # issuu-dl
  
 A simple tool to download publications from [issuu.com](https://issuu.com/), written in Python.
